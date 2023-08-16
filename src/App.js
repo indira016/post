@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import Post from './components/Post';
 import './App.css';
+import Spinner from './components/Spinner';
 
 function App() {
+  const [posts, setPosts] = useState([])
+  const [isLoding, setIsLoding] = useState(false)
+
+  useEffect(() => {
+    setIsLoding(true)
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
+      .then(response => {
+        if (response.ok) {
+          setIsLoding(false)
+          return response.json()
+        }
+      })
+      .then(data => setPosts([...data]))
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLoding && <Spinner />}
+      <Post data={posts} spinner={isLoding} />
     </div>
   );
 }

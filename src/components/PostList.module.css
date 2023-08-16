@@ -1,0 +1,12 @@
+.post{
+    width: 600px;
+    align-items: center;
+   margin-left: 50px;
+   background: rgb(175, 165, 218);
+   
+}
+
+.post li{
+list-style: none;
+padding: 10px;
+}
